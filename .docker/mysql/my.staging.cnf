@@ -1,0 +1,15 @@
+[mysqld]
+# -------------------------------
+# Disable general log
+general_log = 0
+
+# -------------------------------
+# Error log (always enabled by default)
+log_error = /var/lib/mysql/error.log
+
+# -------------------------------
+# Slow query log
+slow_query_log = 1
+slow_query_log_file = /var/lib/mysql/slow.log
+long_query_time = 2   # logs queries taking >2s
+log_queries_not_using_indexes = 0

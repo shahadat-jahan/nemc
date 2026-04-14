@@ -1,0 +1,87 @@
+version: '3.3'
+services:
+
+  # PHP Service
+  app:
+    image: app
+    container_name: app
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+      - ./.docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    ports:
+      - "8000:9000"
+    networks:
+      - app-network
+
+  #Nginx Service
+  webserver:
+    image: nginx:latest
+    container_name: webserver
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./:/var/www
+      - ./.docker/nginx/conf.d/:/etc/nginx/conf.d/
+      - /etc/letsencrypt:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    networks:
+      - app-network
+
+  # Certbot (commented out)
+  #certbot:
+  #  image: certbot/certbot
+  #  container_name: certbot
+  #  restart: unless-stopped
+  #  volumes:
+  #    - ./certbot/conf:/etc/letsencrypt
+  #    - ./certbot/www:/var/www/certbot
+  #  entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+
+  # MySQL Service
+  dba_nemc:
+    image: mysql:5.7.28
+    container_name: dba_nemc
+    restart: always
+    tty: true
+    command: mysqld --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_DATABASE: nemc_db
+      MYSQL_ROOT_PASSWORD: "nemc^&12N"
+      MYSQL_USER: nemc_a
+      MYSQL_PASSWORD: "nemc^&12NB"
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - dba_nemc:/var/lib/mysql
+      - ./.docker/mysql/my.cnf:/etc/mysql/my.cnf
+    networks:
+      - app-network
+
+  # REDIS Service (commented out)
+  # redis:
+  #   image: redis:latest
+  #   container_name: redis
+  #   ports:
+  #     - "6379:6379"
+  #   networks:
+  #     - app-network
+
+# Docker Networks
+networks:
+  app-network:
+    driver: bridge
+
+# Volumes
+volumes:
+  dba_nemc:
+    driver: local
+

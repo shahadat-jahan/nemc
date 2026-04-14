@@ -1,0 +1,640 @@
+@extends('layouts.default')
+@section('pageTitle', $pageTitle)
+
+@push('style')
+    <style>
+        .m-portlet .m-portlet__body{
+            padding: 1.2rem 2.2rem;
+        }
+        #attach-document {
+            cursor: pointer;
+            position: relative;
+            margin-top: 19px;
+            padding-left: 15px;
+        }
+        .img-fluid{
+            max-height: 278px;
+        }
+    </style>
+    @endpush
+@section('content')
+
+    <div class="m-portlet m-portlet--tab">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text"><i class="far fa-plus-square pr-2"></i>Add New Student</h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <a href="{{ url('admin/students') }}" class="btn btn-primary m-btn m-btn--icon"><i class="flaticon-calendar-2"></i> Students</a>
+            </div>
+        </div>
+
+        <!--begin: Form Wizard-->
+        <div class="m-wizard m-wizard--2 m-wizard--success" id="m_wizard">
+
+            <!--begin: Message container -->
+            <div class="m-portlet__padding-x">
+
+                <!-- Here you can put a message or alert -->
+            </div>
+
+            <!--end: Message container -->
+
+            <!--begin: Form Wizard Head -->
+            <div class="m-wizard__head m-portlet__padding-x">
+
+                <!--begin: Form Wizard Progress -->
+                <div class="m-wizard__progress">
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+
+                <!--end: Form Wizard Progress -->
+
+                <!--begin: Form Wizard Nav -->
+                <div class="m-wizard__nav">
+                    <div class="m-wizard__steps">
+                        <div class="m-wizard__step m-wizard__step--current" m-wizard-target="m_wizard_form_step_1">
+                            <a href="#" class="m-wizard__step-number">
+                                <span><i class="fa fa-user"></i></span>
+                            </a>
+                            <div class="m-wizard__step-info">
+                                <div class="m-wizard__step-title">Student</div>
+                            </div>
+                        </div>
+                        <div class="m-wizard__step" m-wizard-target="m_wizard_form_step_2">
+                            <a href="#" class="m-wizard__step-number">
+                                <span><i class="fa fa-user"></i></span>
+                            </a>
+                            <div class="m-wizard__step-info">
+                                <div class="m-wizard__step-title">Address</div>
+                            </div>
+                        </div>
+                        <div class="m-wizard__step" m-wizard-target="m_wizard_form_step_3">
+                            <a href="#" class="m-wizard__step-number">
+                                <span><i class="fa fa-users"></i></span>
+                            </a>
+                            <div class="m-wizard__step-info">
+                                <div class="m-wizard__step-title">Parents</div>
+                            </div>
+                        </div>
+                        <div class="m-wizard__step" m-wizard-target="m_wizard_form_step_4">
+                            <a href="#" class="m-wizard__step-number">
+                                <span><i class="fas fa-university"></i></span>
+                            </a>
+                            <div class="m-wizard__step-info">
+                                <div class="m-wizard__step-title">Education</div>
+                            </div>
+                        </div>
+                        <div class="m-wizard__step" m-wizard-target="m_wizard_form_step_5">
+                            <a href="#" class="m-wizard__step-number">
+                                <span><i class="fa fa-phone"></i></span>
+                            </a>
+                            <div class="m-wizard__step-info">
+                                <div class="m-wizard__step-title">Emergency Contact</div>
+                            </div>
+                        </div>
+                        <div class="m-wizard__step" m-wizard-target="m_wizard_form_step_6">
+                            <a href="#" class="m-wizard__step-number">
+                                <span><i class="fa fa-image"></i></span>
+                            </a>
+                            <div class="m-wizard__step-info">
+                                <div class="m-wizard__step-title">Attachments</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!--end: Form Wizard Nav -->
+            </div>
+
+            <!--end: Form Wizard Head -->
+
+            <!--begin: Form Wizard Form-->
+            <div class="m-wizard__form">
+                <form action="{{route('students.store')}}" method="post" class="m-form m-form--label-align-left- m-form--state-" id="nemc_wizard_form">
+                @csrf
+                <!--begin: Form Body -->
+                    <div class="m-portlet__body">
+
+                        <!--begin: Form Wizard Step 1-->
+                        <div class="m-wizard__form-step m-wizard__form-step--current" id="m_wizard_form_step_1">
+                            @include('students.applicant_add')
+                        </div>
+                        <!--end: Form Wizard Step 1-->
+
+                        <!--begin: Form Wizard Step 2-->
+                        <div class="m-wizard__form-step" id="m_wizard_form_step_2">
+                            @include('students.applicant_address_add')
+                        </div>
+                        <!--begin: Form Wizard Step 2-->
+
+                        <!--begin: Form Wizard Step 3-->
+                        <div class="m-wizard__form-step" id="m_wizard_form_step_3">
+                            @include('students.applicant_parents_add')
+                        </div>
+                        <!--end: Form Wizard Step 3-->
+
+                        <!--begin: Form Wizard Step 4-->
+                        <div class="m-wizard__form-step" id="m_wizard_form_step_4">
+                            @include('students.applicant_education_add')
+                        </div>
+
+                        <!--end: Form Wizard Step 4-->
+
+                        <!--begin: Form Wizard Step 5-->
+                        <div class="m-wizard__form-step" id="m_wizard_form_step_5">
+                            @include('admission.applicant_emergency_contact_add')
+                        </div>
+                        <!--end: Form Wizard Step 5-->
+
+                        <!--begin: Form Wizard Step 6-->
+                        <div class="m-wizard__form-step" id="m_wizard_form_step_6">
+                            @include('admission.applicant_attachment_add')
+                        </div>
+                        <!--end: Form Wizard Step 6-->
+
+                    </div>
+
+                    <!--end: Form Body -->
+
+                    <!--begin: Form Actions -->
+                    <div class="m-portlet__foot m-portlet__foot--fit">
+                        <div class="m-form__actions text-center">
+                            <a href="#" class="btn btn-secondary m-btn m-btn--custom m-btn--icon" data-wizard-action="prev">
+                                <span><i class="la la-arrow-left"></i>&nbsp;&nbsp;<span>Back</span></span>
+                            </a>
+                            <a href="#" class="btn btn-primary m-btn m-btn--custom m-btn--icon" data-wizard-action="submit">
+                                <span><i class="la la-check"></i>&nbsp;&nbsp;<span>Submit</span></span>
+                            </a>
+                            <a href="#" class="btn btn-warning m-btn m-btn--custom m-btn--icon" data-wizard-action="next">
+                                <span><span>Next</span>&nbsp;&nbsp;<i class="la la-arrow-right"></i></span>
+                            </a>
+                        </div>
+                    </div>
+                    <!--end: Form Actions -->
+                </form>
+            </div>
+
+            <!--end: Form Wizard Form-->
+        </div>
+
+        <!--end: Form Wizard-->
+
+    </div>
+@endsection
+
+@push('scripts')
+
+    <script>
+
+        var WizardDemo=function() {
+            $("#m_wizard");
+            var e,
+                r,
+                i=$("#nemc_wizard_form");
+            return {
+                init:function() {
+                    // Add custom validation method for student mobile number
+                    $.validator.addMethod("validMobile", function(value, element) {
+                        // Check for at least one non-zero digit and a minimum length of 11 digits
+                        // Check the student category (you need to replace 'isStudentNormal' with your actual check)
+                        var isStudentNormal = $('#student-category').val();  // Replace this with your actual logic to determine the category
+                        // Define regular expressions based on the student category
+                        var normalCategoryRegex = /^(?=.*[1-9])[0-9]{11}$/;
+                        var otherCategoryRegex = /^\+(?:\d{1,3}[-.\s])?\(?\d{1,4}\)?[-.\s]?\d{1,6}[-.\s]?\d{1,10}$/;  // Replace this with your other regex
+                        // Use the appropriate regex based on the student category
+                        var regexToUse = isStudentNormal != 2 ? normalCategoryRegex : otherCategoryRegex;
+                        // Test the value against the selected regex
+                        return regexToUse.test(value);
+                    }, "Please enter a valid mobile number.");
+
+                    // Add custom validation method for father mobile number
+                    $.validator.addMethod("validFatherMobile", function(value, element) {
+                        // Check for at least one non-zero digit and a minimum length of 11 digits
+                        // Check the student category (you need to replace 'isStudentNormal' with your actual check)
+                        var isStudentNormal = $('#student-category').val();  // Replace this with your actual logic to determine the category
+
+
+                        // Define regular expressions based on the student category
+                        var normalCategoryRegex = /^(?=.*[1-9])[0-9]{11}$/;
+                        var otherCategoryRegex = /^\+(?:\d{1,3}[-.\s])?\(?\d{1,4}\)?[-.\s]?\d{1,6}[-.\s]?\d{1,10}$/;  // Replace this with your other regex
+                        // Use the appropriate regex based on the student category
+                        var regexToUse = isStudentNormal != 2 ? normalCategoryRegex : otherCategoryRegex;
+                        // Test the value against the selected regex
+                        return regexToUse.test(value);
+                    }, "Please enter a valid mobile number.");
+
+                    var n;
+                    $("#m_wizard"),
+                        i=$("#nemc_wizard_form"),
+                        (r=new mWizard("m_wizard", {
+                                startStep: 1
+                            }
+                        )).on("beforeNext", function(r) {
+
+                                !0!==e.form()&&r.stop()
+
+                            }
+                        ),
+                        r.on("change", function(e) {
+                                // mUtil.scrollTop()
+                            }
+                        ),
+                        r.on("change", function(e) {
+
+                                1===e.getStep()
+                            }
+                        ),
+                        e=i.validate( {
+                                ignore:":hidden",
+                                rules: {
+                                    session_id: {
+                                        required: true,
+                                        min: 1
+                                    },
+                                    course_id: {
+                                        required: true,
+                                        min: 1
+                                    },
+                                    student_category_id: {
+                                        required: true,
+                                        min: 1
+                                    },
+                                    full_name_en: {
+                                        required: true,
+                                    },
+                                    admission_year: {
+                                        required: true,
+                                        min: 1
+                                    },
+                                    commenced_year: {
+                                        required: true,
+                                        min: 1
+                                    },
+                                    reg_no: {
+                                        // required: true,
+                                        remote: {
+                                            url: "{{route('student.registration.unique')}}",
+                                            type: "post",
+                                            data: {
+                                                reg_no: function() {
+                                                    return $("#reg_no").val();
+                                                },
+                                                _token: "{{ csrf_token() }}",
+                                            }
+                                        }
+                                    },
+                                    student_id: {
+                                        required: true,
+                                        number:true,
+                                        remote: {
+                                            url: "{{route('admission.student_info.unique')}}",
+                                            type: "post",
+                                            data: {
+                                                student_id: function() {
+                                                    return $("#student_id").val();
+                                                },
+                                                session_id: function() {
+                                                    return $("#session_id").val();
+                                                },
+                                                course_id: function() {
+                                                    return $("#course_id").val();
+                                                },
+                                                _token: "{{ csrf_token() }}",
+                                            }
+                                        }
+                                    },
+                                    roll_no: {
+                                        required: true,
+                                        number: true,
+                                        remote: {
+                                            url: "{{route('admission.student_info.unique')}}",
+                                            type: "post",
+                                            data: {
+                                                roll_no: function() {
+                                                    return $("#roll_no").val();
+                                                },
+                                                session_id: function() {
+                                                    return $("#session_id").val();
+                                                },
+                                                course_id: function() {
+                                                    return $("#course_id").val();
+                                                },
+                                                phase_id: 1,
+                                                _token: "{{ csrf_token() }}",
+                                            }
+                                        }
+                                    },
+                                    user_id: {
+                                        required: true,
+                                        remote: {
+                                            url: "{{route('check.userId.exist')}}",
+                                            type: "post",
+                                            data: {
+                                                user_id: function() {
+                                                    return $("#user_id").val();
+                                                },
+                                                _token: "{{ csrf_token() }}",
+                                            }
+                                        }
+                                    },
+                                    date_of_birth: {
+                                        required: true,
+                                    },
+                                    mobile: {
+                                        validMobile: true,
+                                        required: true,
+                                        noSpace: true,
+                                        remote: {
+                                            url: "{{route('student.mobile.unique')}}",
+                                            type: "post",
+                                            data: {
+                                                mobile: function() {
+                                                    return $( "#mobile" ).val();
+                                                },
+                                                _token: "{{ csrf_token() }}",
+                                            }
+                                        }
+                                    },
+                                    email: {
+                                        email_not_required:true,
+                                        remote: {
+                                            url: "{{route('admission.student_info.unique')}}",
+                                            type: "post",
+                                            data: {
+                                                email: function() {
+                                                    return $("#email").val();
+                                                },
+                                                session_id: function() {
+                                                    return $("#session_id").val();
+                                                },
+                                                course_id: function() {
+                                                    return $("#course_id").val();
+                                                },
+                                                _token: "{{ csrf_token() }}",
+                                            }
+                                        }
+                                    },
+                                    gender: {
+                                        required: true,
+                                    },
+                                    nationality: {
+                                        required: true,
+                                        min: 1,
+                                    },
+                                    place_of_birth: {
+                                        required: true,
+                                    },
+                                    permanent_address: {
+                                        required: true,
+                                    },
+                                    present_address: {
+                                        required: true,
+                                    },
+                                    father_password: {
+                                        required: true,
+                                    },
+                                    father_name: {
+                                        required: true,
+                                    },
+                                    mother_name: {
+                                        required: true,
+                                    },
+                                    father_phone: {
+                                        required: true,
+                                        validFatherMobile: true,
+                                    },
+                                    father_email: {
+                                        email_not_required: true,
+                                    },
+                                    mother_email: {
+                                        email_not_required: true,
+                                    },
+                                    finance_during_study: {
+                                        required: true,
+                                    },
+                                    annual_income: {
+                                        required: true,
+                                    },
+                                    education_level_ssc: {
+                                        required: true,
+                                    },
+                                    education_board_id_ssc: {
+                                        required: true,
+                                    },
+                                    institution_ssc: {
+                                        required: true,
+                                    },
+                                    pass_year_ssc: {
+                                        required: true,
+                                    },
+                                    gpa_ssc: {
+                                        required: true,
+                                    },
+                                    gpa_biology_ssc: {
+                                        required: true,
+                                    },
+                                    education_level_hsc: {
+                                        required: true,
+                                    },
+                                    education_board_id_hsc: {
+                                        required: true,
+                                    },
+                                    institution_hsc: {
+                                        required: true,
+                                    },
+                                    pass_year_hsc: {
+                                        required: true,
+                                    },
+                                    gpa_hsc: {
+                                        required: true,
+                                    },
+                                    gpa_biology_hsc: {
+                                        required: true,
+                                    },
+
+                                },
+                                messages: {
+                                    student_id:{
+                                        remote : 'Value must be unique',
+                                    },
+                                    roll_no:{
+                                        remote : 'Value must be unique',
+                                    },
+                                    user_id:{
+                                        remote : 'Value must be unique',
+                                    },
+                                    email:{
+                                        remote : 'Value must be unique',
+                                    },
+                                    mobile:{
+                                        remote : 'Mobile must be unique, this mobile number already has been taken',
+                                    },
+                                    reg_no:{
+                                        remote : 'Registration number must be unique',
+                                    }
+                                },
+                                invalidHandler:function(e, r) {
+                                    /*mUtil.scrollTop(), swal( {
+                                            title: "", text: "There are some errors in your submission. Please correct them.", type: "error", confirmButtonClass: "btn btn-secondary m-btn m-btn--wide"
+                                        }
+                                    )*/
+                                },
+                            submitHandler:function(e) {}
+                            }
+                        ),
+                        (n=i.find('[data-wizard-action="submit"]')).on("click", function(r) {
+
+                                r.preventDefault(), e.form()&&(mApp.progress(n),
+
+                                        i[0].submit()
+                                )
+                            }
+                        )
+                }
+            }
+        }
+        ();
+
+        $(document).ready(function() {
+
+            WizardDemo.init();
+
+            $(".m_datepicker_1").datepicker( {
+                todayHighlight: !0,
+                orientation: "bottom left",
+                format: 'dd/mm/yyyy',
+                autoclose: true,
+            });
+
+            $('#student-category').change(function () {
+                category = $(this).val();
+
+                if (category == 2){
+                    $('.foreign-row').removeClass('m--hide');
+                } else{
+                    $('.foreign-row').addClass('m--hide');
+                }
+            });
+
+            function getTotalAssets(){
+                annualIncome = ($('#annual_income').val().length > 0 )? $('#annual_income').val() : 0;
+                movableProperty = ($('#movable_property').val().length > 0 )? $('#movable_property').val() : 0;
+                immovableProperty = ($('#immovable_property').val().length > 0 )? $('#immovable_property').val() : 0;
+                totalAsset = parseInt(annualIncome) + parseInt(movableProperty) + parseInt(immovableProperty);
+
+                $('#total_asset').val(totalAsset.toFixed(2));
+            }
+
+            function getTotalAssetsPoints(){
+                annualIncomePoint = ($('#annual_income_grade').val().length > 0 )? $('#annual_income_grade').val() : 0;
+                movablePropertyPoint = ($('#movable_property_grade').val().length > 0 )? $('#movable_property_grade').val() : 0;
+                immovablePropertyPoint = ($('#immovable_property_grade').val().length > 0 )? $('#immovable_property_grade').val() : 0;
+                totalAssetPoint = parseInt(annualIncomePoint) + parseInt(movablePropertyPoint) + parseInt(immovablePropertyPoint);
+
+                $('#total_asset_grade').val(totalAssetPoint.toFixed(2));
+            }
+
+            $('#annual_income, #movable_property, #immovable_property').keyup(function (e) {
+                e.preventDefault();
+                getTotalAssets();
+            })
+
+            $('#annual_income_grade, #movable_property_grade, #immovable_property_grade').keyup(function (e) {
+                e.preventDefault();
+                getTotalAssetsPoints();
+            });
+
+            $('#father_user_id').focusout(function (e) {
+                e.preventDefault();
+
+                parentId = $.trim($(this).val());
+
+                if (parentId != ''){
+                    $.get('{{route('guardian.info.userid')}}', {userId: parentId, _token: "{{ csrf_token() }}"}, function (response) {
+                        if (response.status){
+                            $('.father_name').val(response.data.father_name);
+                            $('.mother_name').val(response.data.mother_name);
+                            $('.father_phone').val(response.data.father_phone);
+                            $('.mother_phone').val(response.data.mother_phone);
+                            $('.father_email').val(response.data.father_email);
+                            $('.mother_email').val(response.data.mother_email);
+                            $('.occupation').val(response.data.occupation);
+                            $('.finance_during_study').val(response.data.finance_during_study);
+                            $('.annual_income').val(response.data.annual_income);
+                            $('.annual_income_grade').val(response.data.annual_income_grade);
+                            $('.movable_property').val(response.data.movable_property);
+                            $('.movable_property_grade').val(response.data.movable_property_grade);
+                            $('.immovable_property').val(response.data.immovable_property);
+                            $('.immovable_property_grade').val(response.data.immovable_property_grade);
+                            $('.total_asset').val(response.data.total_asset);
+                            $('.total_asset_grade').val(response.data.total_asset_grade);
+                            $('.parent_address').val(response.data.address);
+                        }else{
+                            $('.father_name').val('');
+                            $('.mother_name').val('');
+                            $('.father_phone').val('');
+                            $('.mother_phone').val('');
+                            $('.father_email').val('');
+                            $('.mother_email').val('');
+                            $('.occupation').val('');
+                            $('.finance_during_study').val('');
+                            $('.annual_income').val('');
+                            $('.annual_income_grade').val('');
+                            $('.movable_property').val('');
+                            $('.movable_property_grade').val('');
+                            $('.immovable_property').val('');
+                            $('.immovable_property_grade').val('');
+                            $('.total_asset').val('');
+                            $('.total_asset_grade').val('');
+                            $('.parent_address').val('');
+                        }
+                    });
+                }
+            });
+
+            function makeStudentIdAndUserId(sessionId, courseId){
+                if (courseId > 0 && sessionId > 0){
+                    $.get('{{route('admission.student.batch.info')}}', {courseId: courseId, sessionId: sessionId, _token: "{{ csrf_token() }}"}, function (response) {
+                        if (response.status){
+                            $('#student_id').val(response.data.student_id);
+                            $('#roll_no').val(response.data.roll_no);
+                            $('#user_id').val(response.data.student_id);
+                            $('#father_user_id').val('pr' + response.data.student_id);
+                        }
+                    });
+                }
+            }
+
+            $('#session_id').change(function (e) {
+                e.preventDefault();
+                sessionId = $(this).val();
+                courseId = $('#course_id').val();
+                makeStudentIdAndUserId(sessionId, courseId);
+            });
+
+            $('#course_id').change(function (e) {
+                e.preventDefault();
+                courseId = $(this).val();
+                sessionId = $('#session_id').val();
+                makeStudentIdAndUserId(sessionId, courseId);
+            });
+
+            $('#same_as_present'). click(function(){
+                if ($(this).is(':checked')){
+                    $('#st-present-addr').val($('#st-permanent-addr').val()).attr('readonly', true);
+                }else{
+                    $('#st-present-addr').val('').removeAttr('readonly');
+                }
+            });
+
+
+
+        });
+    </script>
+@endpush

@@ -1,0 +1,78 @@
+version: '3'
+services:
+
+  # PHP Service
+  demo_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: vivacom/php
+    container_name: demo_app
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: demo_app
+      SERVICE_TAGS: dev
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+      - ./.docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - demo_app-network
+
+  # Nginx Service
+  demo_webserver:
+    image: nginx:latest
+    container_name: demo_webserver
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "90:80"
+      - "490:443"
+    volumes:
+      - ./:/var/www
+      - ./.docker/nginx/conf.d/staging/:/etc/nginx/conf.d/
+    networks:
+      - demo_app-network
+
+  # MySQL Service
+  demo_dba_nemc:
+    image: mysql:5.7.28
+    container_name: demo_dba_nemc
+    restart: always
+    tty: true
+    ports:
+      - "3390:3306"
+    command: mysqld --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_DATABASE: nemc_db
+      MYSQL_ROOT_PASSWORD: nemc^&12N
+      MYSQL_USER: nemc_a
+      MYSQL_PASSWORD: nemc^&12NB
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - demo_dba_nemc:/var/lib/mysql
+      - ./.docker/mysql/my.staging.cnf:/etc/mysql/my.cnf
+    networks:
+      - demo_app-network
+
+  # Redis Service (commented out)
+  # redis:
+  #   image: redis:latest
+  #   container_name: redis
+  #   ports:
+  #     - "6379:6379"
+  #   networks:
+  #     - demo_app-network
+
+# Docker Networks
+networks:
+  demo_app-network:
+    driver: bridge
+
+# Volumes
+volumes:
+  demo_dba_nemc:
+    driver: local
+
