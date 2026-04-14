@@ -702,5 +702,4 @@ From this module we can see detail, export in excel, download in pdf file and pr
       This sub modules has relation with submodules *`course`* and *`department`*.
       You can see teacher list report by *`teacherListReport`* method in *`ReportController`*. and also can print data by clicking 'Print' button, with the help of function *`teacherListPrint`* in *`ReportController`*. 
       User also can see details report of student by clicking on 'view' button from list page with the help of *`teacherSingleReport`* method in *`ReportController`*. 
-      Again also can print single student data by clicking on *`teacherSinglePrint`* method lies in *`ReportController`*.#   n e m c  
- 
+      Again also can print single student data by clicking on *`teacherSinglePrint`* method lies in *`ReportController`*.
